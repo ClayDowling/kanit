@@ -1,0 +1,17 @@
+=================
+Create Task Class
+=================
+
+:points:	8
+:status:	In Progress
+
+To faciliate later features, a Task class should be created.  This class
+will contain the following properties:
+
+  * Title
+  * Points
+  * Status
+  * Assigned
+
+  * Text file name
+  * HTML file name

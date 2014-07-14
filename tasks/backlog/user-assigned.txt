@@ -1,0 +1,10 @@
+==========================
+Display Assigned Worker(s)
+==========================
+
+:points:	2
+:status:	Not Started
+
+Each task may have a field ":assigned:" which contains a comma separated list
+of the people assigned to work on the task.  The contents of this field should
+be part of the kanban board display.

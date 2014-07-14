@@ -1,0 +1,8 @@
+=============
+Task Priority
+=============
+
+:points:	3
+:status:	Not Started
+
+A proper kanban system should prioritize the order of the work, with the most important tasks being pulled first.  To that end, tasks can be assigned a ":priority:" field.

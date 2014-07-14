@@ -1,0 +1,11 @@
+===============
+Status Ordering
+===============
+
+:points:	4
+:status:	Not Started
+
+Allow custom ordering of the status on the kanban board.  The ordering should
+be determined by a kanit.conf file in the same folder as the tasks.  The key
+"status.order" should contain a list of the stati, in the desired order.  Any
+status that is outside of the list should be displayed after the listed stati.
