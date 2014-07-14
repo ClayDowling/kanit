@@ -53,4 +53,18 @@ signoff by a stakeholder.  The important thing is to establish a standard
 for what you and your team should be using.
 
 
+Using Kanit
+===========
+
+As of right now, kanit is remarkably unsophisticated.  This example all
+of your tasks are stored in a folder of your project called "tasks," all
+of the file names end with ".txt" and you have Python Docutils
+installed.
+
+1. Change to the tasks folder
+
+2. kanit.py \*.txt > index.html
+
+That's it.  You've got your kanban board. It's bone simple to use, but
+very effective for keeping a project on track.
 
