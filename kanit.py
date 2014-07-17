@@ -7,59 +7,6 @@ import sys
 import os
 import task
 
-def get_title(buff):
-    """
-    Retrieve the title from a text buffer.  The title is the first line
-    following a ReStructured Text title indicator (======).
-
-    @param[in] buff     Text buffer containing the task file
-
-    @return string      Text of the title
-    """
-
-    match = re.search('===*\n(.*)\n', buff, re.MULTILINE)
-    if match == None:
-        return 'No title'
-
-    return match.group(1)
-
-def get_status(buff):
-    """
-    Retrieve the task status from a text buffer.  This is set with the RST
-    field :status:  If no value is found, "Not Started" is returned as a
-    default
-
-    @param[in] buff     Text buffer containing the task file
-    """
-
-    match = re.search(':status:\s*(.+)', buff, re.MULTILINE)
-    if match == None:
-        return 'Unknown'
-
-    return match.group(1)
-
-def get_points(buff):
-    """
-    Retrieve the number of points assigned to this task.  This is set with 
-    the RST field :points:  If no value is found, 0 is returned as a default.
-
-    @param[in] buff     Text buffer containing the task file
-
-    @return int     Integer value for points
-    """
-
-    match = re.search(':points:\s*(\d+)', buff, re.MULTILINE)
-    if match == None:
-        return 0
-
-    value = 0
-    try:
-        value = int(match.group(1))
-    except:
-        value = 0
-
-    return value
-
 def pedestrian(arg, dirname, fnames):
     """
     Walk me Amadeus.  Callback function for os.path.walk which will
