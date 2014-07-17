@@ -1,3 +1,11 @@
+#!/usr/bin/python
+
+
+import sys
+import unittest
+import re
+import os
+
 class Task:
 
     def __init__(self, buff=None):
@@ -18,7 +26,7 @@ class Task:
         what is contained in the text buffer.
 
         @param[in] buff     Text buffer
-        """"
+        """
 
         self.buff = buff
 
@@ -27,7 +35,7 @@ class Task:
         self.status = self._get_status()
         self.assigned = self._get_assigned()
 
-    def fromFile(fname):
+    def fromFile(self, fname):
         """
         Populate a task from the contents of a file.  This will also
         automatically set the text file name and the html file name.
@@ -40,7 +48,8 @@ class Task:
         @param[in] fname    Filename to read from.
         """
         f = open(fname, 'r')
-        buff = fp.read()
+        buff = f.read()
+        f.close()
         self.setBuffer(buff)
 
         # Automatically set file name information
@@ -48,7 +57,7 @@ class Task:
         (root, ext) = os.path.splitext(self.textfile)
         self.htmlfile = root + '.html'
 
-    def _get_property(name):
+    def _get_property(self, name):
         """
         Return a task property stored in a ReStructuredText field.
 
@@ -79,15 +88,17 @@ class Task:
 
         title = ''
 
-        match = re.search("==+\s*\n(.*)", self.buffer, re.MULTILINE)
+        match = re.search("==+\s*\n(.*)", self.buff, re.MULTILINE)
         if match == None:
-            lines = self.buffer.split('\n')
+            lines = self.buff.split('\n')
             title = lines[0]
         else:
             title = match.group(1)
 
         if title == '':
             return 'Unknown'
+
+        return title
 
     def _get_status(self):
         """
@@ -115,7 +126,7 @@ class Task:
         rawassigned = self._get_property('assigned')
         assigned = []
         if len(rawassigned) > 0:
-            if ',' is in rawassigned:
+            if ',' in rawassigned:
                 assigned = [name.strip() for name in rawassigned.split(',')]
             else:
                 assigned = [rawassigned]
@@ -139,3 +150,79 @@ class Task:
                 points = 0
 
         return points
+
+class WholeFileTestCase(unittest.TestCase):
+    def setUp(self):
+        self.contents = """
+================
+Sample Task File
+================
+
+:points:    7
+:assigned:  bob,carol
+:status:    Not Started
+
+This is just some placeholder text.
+"""
+
+        self.samplefile = '/tmp/unit-test-sample.txt'
+        f = open(self.samplefile, 'w')
+        f.write(self.contents)
+        f.close()
+
+    def tearDown(self):
+        os.unlink(self.samplefile)
+
+    def testTitle(self):
+        t = Task(self.contents)
+        assert t.title == "Sample Task File", \
+            'Wrong title "%s"' % t.title
+
+    def testAssigned(self):
+        t = Task(self.contents)
+        assert len(t.assigned) == 2, \
+            'Expected 2 assigned, got %d' % t.assigned
+
+    def testStatus(self):
+        t = Task(self.contents)
+        assert t.status == 'Not Started', \
+            'Wrong status "%s"' % t.status
+
+    def testFilenames(self):
+        t = Task()
+        t.fromFile(self.samplefile)
+        assert t.textfile == 'unit-test-sample.txt', \
+                'Wrong textfile "%s"' % t.textfile
+        assert t.htmlfile == 'unit-test-sample.html', \
+                'Wrong htmlfile "%s"' % t.htmlfile
+
+class MinimalFileTestCase(unittest.TestCase):
+    def setUp(self):
+        self.contents = """Sample Task
+
+This is a sample task with no actual content
+"""
+
+    def testTitle(self):
+        t = Task(self.contents)
+        assert t.title == 'Sample Task', \
+                'Unexpected title "%s"' % t.title
+
+    def testAssigned(self):
+        t = Task(self.contents)
+        assert len(t.assigned) == 0, \
+                'Expected 0 assigned, got %d' % len(t.assigned)
+
+    def testStatus(self):
+        t = Task(self.contents)
+        assert t.status == 'Unknown', \
+                'Unexpected status "%s"' % t.status
+
+    def testPoints(self):
+        t = Task(self.contents)
+        assert t.points == 0, \
+                'Expected 0 points, got %d' % t.points
+
+if __name__ == '__main__':
+    unittest.main()
+

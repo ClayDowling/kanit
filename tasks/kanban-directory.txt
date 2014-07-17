@@ -3,6 +3,6 @@ Kanban Directory
 ================
 
 :points:	2
-:status:	Not Started
+:status:	Done
 
 The input parameter to kanit should be a directory.  Kanit will then scan the directory for text files to use as the tasks for the kanban board.

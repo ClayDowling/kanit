@@ -5,6 +5,7 @@
 import re
 import sys
 import os
+import task
 
 def get_title(buff):
     """
@@ -59,68 +60,104 @@ def get_points(buff):
 
     return value
 
-def main():
+def pedestrian(arg, dirname, fnames):
+    """
+    Walk me Amadeus.  Callback function for os.path.walk which will
+    correctly generate the kanban board statistics and appropriate
+    output files
 
-    files = sys.argv[1:]
-    title = {}
+    @param[in] arg  Blind argument
+    @param[in] dirname  Directory currently occupied
+    @param[in] fnames   List of files in this path.  del any members
+                        which are directories and should not be
+                        descended.
+    """
+
+    tasks = []
     status = {}
     points = {}
-    slist = {}
-    totalpoints = 0
-    statuspoints = {}
+    boardpoints = 0
 
-    for f in files:
-        fp = open(f, 'r')
-        buff = fp.read()
-        title[f] = get_title(buff)
-        s = get_status(buff)
-        if not s in slist:
-            slist[s] = [f]
+    # Knock out housekeeping folders
+    if 'backlog' in fnames:
+        idx = fnames.index('backlog')
+        del fnames[idx]
+    if 'archive' in fnames:
+        idx = fnames.index('archive')
+        del fnames[idx]
+
+    # Add tasks to the list
+    for fname in fnames:
+        (base, ext) = os.path.splitext(fname)
+        if ext == '.txt':
+            t = task.Task()
+            t.fromFile(os.path.join(dirname, fname))
+            tasks.append(t)
+
+    for t in tasks:
+        boardpoints = boardpoints + t.points
+        if t.status in status:
+            status[t.status].append(t)
+            points[t.status] = points[t.status] + t.points
         else:
-            slist[s].append(f)
+            status[t.status] = [t]
+            points[t.status] = t.points
 
-        status[f] = s
-        
-        taskpoints = get_points(buff)
-        points[f] = taskpoints
-        totalpoints = totalpoints + taskpoints
+    title = '%s board' % dirname
 
-        if not s in statuspoints:
-            statuspoints[s] = taskpoints
-        else:
-            statuspoints[s] = statuspoints[s] + taskpoints
+    outname = os.path.join(dirname, 'index.html')
+    fp = open(outname, 'w')
 
-    print """
+    fp.write("""
     <html>
     <head>
-      <link rel="stylesheet" type="text/css" href="kanit.css" />
-      <title>Kanban Board</title>
+        <link rel="stylesheet" type="text/css" href="kanban.css" />
+        <title>%s</title>
     </head>
     <body>
+        <h1 class="boardtitle">%s</h1>
+        <div class="boardpoints">%d</div>
+    """ % (title, title, boardpoints))
 
-    <h1 class="boardname">Kanban Board</h1>
+    keys = status.keys()
+    keys.sort()
+    for k in keys:
+        fp.write("""
+            <div class="statuscolumn">
+                <span class="statusname">%s</span>
+                <span class="statuspoints">%d</span>
+                <ul>
+        """ % (k, points[k]))
 
-    <p class="boardpoints">%d points</p>
-    """ % totalpoints
+        v = status[k]
+        for t in v:
+            fp.write( '     <li><a href="%s">%s</a> [%d]' \
+                    % (t.textfile, t.title, t.points))
+            if len(t.assigned) > 0:
+                fp.write( ' - %s' % ','.join(t.assigned))
+            fp.write( '</li>')
 
-    slen = len(slist)
-    swidth = 90 / slen
-    for s in slist.keys():
-        print '<div class="statuscolumn" style="width: %d%%; float: left;">' % swidth
-        print '<p class="status"><span class="statusname">%s</span> <span class="statuspoints">[%d]</span></p>' % (s, statuspoints[s])
-        print '<ul class="statusitem">'
-        for f in slist[s]:
-            (root, ext) = os.path.splitext(f)
-            htmlfile = root + '.html'
-            os.system("rst2html %s > %s" % (f, htmlfile))
-            print '<li><a href="%s">%s</a> [%d]</li>' % (htmlfile, title[f], points[f])
-        print "</ul>"
-        print "</div>"
+        fp.write( """
+        </ul>
+        </div>
+        """)
 
-    print """
+    fp.write( """
     </body>
     </html>
-    """
+    """)
+
+    fp.close()
+
+def main():
+
+    paths = sys.argv[1:]
+
+    if len(paths) == 0:
+        paths = ['.']
+
+    for path in paths:
+        os.path.walk(path, pedestrian, None)
 
 if __name__ == "__main__":
     main()

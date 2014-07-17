@@ -3,7 +3,7 @@ Create Task Class
 =================
 
 :points:	8
-:status:	In Progress
+:status:	Done
 
 To faciliate later features, a Task class should be created.  This class
 will contain the following properties:
