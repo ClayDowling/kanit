@@ -50,7 +50,10 @@ def pedestrian(arg, dirname, fnames):
             status[t.status] = [t]
             points[t.status] = t.points
 
-    title = '%s board' % dirname
+    if dirname == '.':
+        title = 'Kanban board'
+    else:
+        title = '%s board' % dirname
 
     outname = os.path.join(dirname, 'index.html')
     fp = open(outname, 'w')
@@ -58,12 +61,12 @@ def pedestrian(arg, dirname, fnames):
     fp.write("""
     <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="kanban.css" />
+        <link rel="stylesheet" type="text/css" href="kanit.css" />
         <title>%s</title>
     </head>
     <body>
         <h1 class="boardtitle">%s</h1>
-        <div class="boardpoints">%d</div>
+        <div class="boardpoints">Board Points: %d</div>
     """ % (title, title, boardpoints))
 
     keys = status.keys()

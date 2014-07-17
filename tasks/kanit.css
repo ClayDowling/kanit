@@ -1,0 +1,30 @@
+body {
+	font-family: sans-serif;
+	margin: 1ex;
+}
+
+h1.boardtitle {
+	text-align: center;
+}
+
+.boardpoints {
+	text-align: center;
+	font-size: 14pt;
+}
+
+.statuscolumn {
+	border: 1px solid #888;
+	margin: 1ex;
+	padding: 1ex;
+	float: left;
+	width: 40ex;
+}
+
+.statusname {
+	font-weight: bold;
+}
+
+.statuspoints {
+	float: right;
+}
+
