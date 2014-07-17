@@ -56,15 +56,25 @@ for what you and your team should be using.
 Using Kanit
 ===========
 
-As of right now, kanit is remarkably unsophisticated.  This example all
-of your tasks are stored in a folder of your project called "tasks," all
-of the file names end with ".txt" and you have Python Docutils
-installed.
+Kanit is incredibly simple to use::
 
-1. Change to the tasks folder
+	kanity.py tasks
 
-2. kanit.py \*.txt > index.html
+This assumes that your task list lives in a folder called "tasks" under
+your current folder.
 
-That's it.  You've got your kanban board. It's bone simple to use, but
-very effective for keeping a project on track.
+In a multi-person project the task folder is probably under source
+control (it should be if it isn't).  Let me suggest a couple of best
+practices:
 
+1. Before changing the status of a task, update your local checkout.
+
+2. After changing anything in a task file, especially a status, commit
+   your changes.
+
+Of course this is no substitute for good communication within your team.
+You should talk to them via whatever communications mechanism you have
+set up and make sure that you aren't grabbing a task somebody else is
+working on.  Mentioning that you are taking a task may also prompt some
+important discussion.  Things that they may have realized about the task
+that they didn't know when the task was written.
