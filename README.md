@@ -99,11 +99,11 @@ Directory Structure
 
 Allow me to suggest the following directory structure::
 
-  tasks
-      |
-      +-backlog
-      |
-      +-archive
+	tasks 
+		|
+		+-backlog
+		|
+		+-archive
 
 The backlog folder will contain stories which you have written, but
 haven't yet pulled into a sprint to work on.  It may also happen that in
