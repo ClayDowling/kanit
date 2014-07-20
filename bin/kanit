@@ -5,7 +5,7 @@
 import re
 import sys
 import os
-import task
+import kanit
 
 def pedestrian(arg, dirname, fnames):
     """
@@ -37,7 +37,7 @@ def pedestrian(arg, dirname, fnames):
     for fname in fnames:
         (base, ext) = os.path.splitext(fname)
         if ext == '.txt':
-            t = task.Task()
+            t = kanit.task.Task()
             t.fromFile(os.path.join(dirname, fname))
             tasks.append(t)
 
