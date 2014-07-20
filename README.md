@@ -4,6 +4,21 @@ KANIT
 
 Kanban board management system by Clay Dowling <clay@lazarusid.com>
 
+Installing
+==========
+
+The easiest way to install kanit is to run the easy_install program::
+
+	sudo easy_install kanit
+
+If you prefer the latest and greatest, you can download the zip archive
+from the source repository, and run the install tool::
+
+	wget https://github.com/LazarusID/kanit/archive/master.zip
+	cd kanit-master
+	sudo python setup.py install
+
+
 Purpose
 =======
 
@@ -78,3 +93,27 @@ set up and make sure that you aren't grabbing a task somebody else is
 working on.  Mentioning that you are taking a task may also prompt some
 important discussion.  Things that they may have realized about the task
 that they didn't know when the task was written.
+
+Directory Structure
+-------------------
+
+Allow me to suggest the following directory structure::
+
+  tasks
+      |
+      +-backlog
+      |
+      +-archive
+
+The backlog folder will contain stories which you have written, but
+haven't yet pulled into a sprint to work on.  It may also happen that in
+the course of working on a story, you decide to defer action on it.  I
+typically give it a status of "Deferred" so that it is easier to spot,
+then move it to the backlog folder.
+
+The archive folder is where I store old sprints.  I zip up everything
+with a "Done" status in the sprint folder into an appropriate named
+file, such as `archive\sprint-01.zip`  After confirming that the files
+really are in the archive, I then delete them from the tasks folder.
+
+
