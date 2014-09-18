@@ -15,6 +15,7 @@ class Task:
         self.assigned = []
         self.textfile = ''
         self.htmlfile = ''
+        self.tasktype = ''
 
         if buff != None:
             self.setBuffer(buff)
@@ -34,6 +35,7 @@ class Task:
         self.points = self._get_points()
         self.status = self._get_status()
         self.assigned = self._get_assigned()
+        self.tasktype = self._get_type()
 
     def fromFile(self, fname):
         """
@@ -151,6 +153,21 @@ class Task:
 
         return points
 
+    def _get_type(self):
+        """
+        Retrieve the task type for this task as indicated by the :type:
+        field.  If the field is missing the assigned value will be
+        "Feature".
+
+        @return string  String value of the type
+        """
+
+        ltype = self._get_property('type')
+        if ltype == '':
+            ltype = 'Feature'
+
+        return ltype
+
 class WholeFileTestCase(unittest.TestCase):
     def setUp(self):
         self.contents = """
@@ -161,6 +178,7 @@ Sample Task File
 :points:    7
 :assigned:  bob,carol
 :status:    Not Started
+:type:      Defect
 
 This is just some placeholder text.
 """
@@ -196,6 +214,12 @@ This is just some placeholder text.
         assert t.htmlfile == 'unit-test-sample.html', \
                 'Wrong htmlfile "%s"' % t.htmlfile
 
+    def testType(self):
+        t = Task()
+        t.fromFile(self.samplefile)
+        assert t.tasktype == 'Defect', \
+                'Wrong task type "%s"' % t.tasktype
+
 class MinimalFileTestCase(unittest.TestCase):
     def setUp(self):
         self.contents = """Sample Task
@@ -222,6 +246,11 @@ This is a sample task with no actual content
         t = Task(self.contents)
         assert t.points == 0, \
                 'Expected 0 points, got %d' % t.points
+
+    def testType(self):
+        t = Task(self.contents)
+        assert t.tasktype == 'Feature', \
+                'Expected "Feature", got %s' % t.tasktype
 
 if __name__ == '__main__':
     unittest.main()
