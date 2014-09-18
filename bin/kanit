@@ -81,8 +81,8 @@ def pedestrian(arg, dirname, fnames):
 
         v = status[k]
         for t in v:
-            fp.write( '     <li><a href="%s">%s</a> [%d]' \
-                    % (t.textfile, t.title, t.points))
+            fp.write( '     <li class="%s"><a href="%s">%s</a> [%d]' \
+                    % (t.tasktype, t.textfile, t.title, t.points))
             if len(t.assigned) > 0:
                 fp.write( ' - %s' % ','.join(t.assigned))
             fp.write( '</li>')
