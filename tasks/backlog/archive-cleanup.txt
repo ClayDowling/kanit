@@ -1,9 +1,0 @@
-=========================
-Spring Cleanup on Archive
-=========================
-
-:points:	4
-:status:	Not Started
-
-When a sprint is archived, all of the tasks which have been archive should have
-their appropriate .txt and .html files removed from the kanban folder.
