@@ -1,0 +1,10 @@
+=================
+Task Type Display
+=================
+
+:points:	2
+:status:	Not Started
+:type:		Feature
+
+When task has a type, the type will be added as a CSS class to the LI
+tag wrapped around the task in output.

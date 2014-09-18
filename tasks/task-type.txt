@@ -1,0 +1,10 @@
+=============
+Add Task Type
+=============
+
+:points:	4
+:status:	In Progress
+:type:		Feature
+
+Each task can optionally be assigned a type, such as Feature, Technical
+Debt, or Defect.

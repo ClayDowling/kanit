@@ -1,0 +1,19 @@
+================
+Archive a Sprint
+================
+
+:points:	4
+:status:	In Progress
+
+All of the completed tasks for a sprint should be archived, along with the kanban board at the time the sprint was closed.
+
+The archive program should accept the following parameters:
+
+  * --status=AAAA - All tasks with status AAAA will be made part of the archive
+
+  * --path=BBBB - The path to search for task files
+
+  * --archive-folder=CCCC - The folder under BBBB where the archive file
+    should be written.  If not present, it should default to BBBB.  If
+    CCCC is a relative path, it refers to that path under each folder
+    which is inspected for archiving.
