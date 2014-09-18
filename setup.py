@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name='kanit',
-        version='0.5',
+        version='0.6',
         description='Kanit kanban tool',
         url='https://github.com/LazarusID/kanit',
         author='Clay Dowling',
