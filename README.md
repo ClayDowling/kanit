@@ -94,6 +94,27 @@ working on.  Mentioning that you are taking a task may also prompt some
 important discussion.  Things that they may have realized about the task
 that they didn't know when the task was written.
 
+Status Ordering
+---------------
+
+Each story is displayed in a list, with the lists organized by their
+status.  By default this list is sorted alphabetically.  If in the
+folder there is a file "kanit.conf" this file will be read for
+information about the sort order you would prefer for the status.
+
+kanit.conf is a JSON file.  If you would like to control the sort order,
+create a dictionary in this file with a key of "status.order", and
+assign it a list of the values you would like to use for status, in the
+order you would like to see them.  Any status that does not appear in
+this list will appear after the listed stati sorted in alphabetical
+order.
+
+The file I use in my own development looks something like this::
+
+	{
+		"status.order": ["Not Started", "In Process", "Done"]
+	}
+
 Directory Structure
 -------------------
 
