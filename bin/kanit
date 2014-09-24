@@ -25,12 +25,18 @@ def pedestrian(arg, dirname, fnames):
     points = {}
     boardpoints = 0
 
+    conf = kanit.config.Config()
+
     # Knock out housekeeping folders
     if 'backlog' in fnames:
         idx = fnames.index('backlog')
         del fnames[idx]
     if 'archive' in fnames:
         idx = fnames.index('archive')
+        del fnames[idx]
+    if 'kanit.conf' in fnames:
+        conf.LoadFromFile('kanit.conf')
+        idx = fnames.index('kanit.conf')
         del fnames[idx]
 
     # Add tasks to the list
@@ -71,7 +77,14 @@ def pedestrian(arg, dirname, fnames):
 
     keys = status.keys()
     keys.sort()
+
+    sorted_keys = conf.status_order
+
     for k in keys:
+        if k not in sorted_keys:
+            sorted_keys.append(k)
+
+    for k in sorted_keys:
         fp.write("""
             <div class="statuscolumn">
                 <span class="statusname">%s</span>
