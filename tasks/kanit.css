@@ -28,3 +28,10 @@ h1.boardtitle {
 	float: right;
 }
 
+.Defect {
+	background-color: red;
+}
+
+.TechDebt {
+	background-color: #cc99cc;
+}

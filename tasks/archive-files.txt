@@ -4,6 +4,7 @@ Archive a Sprint
 
 :points:	4
 :status:	Not Started
+:type:		Defect
 
 All of the completed tasks for a sprint should be archived, along with the kanban board at the time the sprint was closed.
 

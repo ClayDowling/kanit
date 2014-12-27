@@ -3,7 +3,7 @@ Status Ordering
 ===============
 
 :points:	4
-:status:	In Progress
+:status:	Done
 
 Allow custom ordering of the status on the kanban board.  The ordering should
 be determined by a kanit.conf file in the same folder as the tasks.  The key
