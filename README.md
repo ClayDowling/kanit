@@ -137,4 +137,37 @@ with a "Done" status in the sprint folder into an appropriate named
 file, such as `archive\sprint-01.zip`  After confirming that the files
 really are in the archive, I then delete them from the tasks folder.
 
+Fields
+------
+
+There are several fields which are by default understood by kanit.
+
+### status
+
+A story's status.  Stories are by default sorted into statuses on a
+kanban board.  The statuses used for your project will depend on your
+workflow.  For personal projects I default to Not Started, In Progress
+and Done.
+
+### assigned
+
+A comma separated list of the users assigned to a story.  Currently not
+used for anything but display on the kanban board, but ultimately will
+be used for reporting on WIP, and with a little twiddling alerting to
+WIP limit violations.
+
+### points
+
+The number of story points which have been assigned to this story.  The
+meaning of these points will be dependent upon your team.  Numeric
+values will be summed for reporting about the number of points on the
+board and the number of points in each status.
+
+### type
+
+A freeform text field.  This value is added as a class to the LI tag for
+this story.  If these are restricted to single word values, you can use
+the type to control the way a story is rendered on the kanban board via
+CSS, allowing you to color code your board.  For instance I use a green
+background for technical debt stories and a red background for defects.
 
